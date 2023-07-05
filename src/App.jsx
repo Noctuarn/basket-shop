@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useReducer } from "react";
 import "./App.scss";
 import "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.css";
@@ -7,8 +7,26 @@ import NavBar from "./components/NavBar/NavBar";
 import ShopCardGrid from "./components/ShopCardGrid";
 import Basket from "./components/Basket/Basket";
 
+import basketReducer, { initialState } from "./basketReducer";
+
+
 function App() {
   const [isBasketOpen, setIsBasketOpen] = useState(false);
+  const [basketState, dispatch] = useReducer(basketReducer, initialState);
+
+  const addItems = (id, img, title, text, price) => {
+    dispatch({
+      type: "ADD_ITEM",
+      payload: { item: { id, img, title, text, price } }
+    });
+  };
+
+  const removeFromBasket = (id) => {
+    dispatch({
+      type: "REMOVE_ITEM",
+      payload: {item: {id}}
+    })
+  }
 
   const basketToggler = () => {
     setIsBasketOpen(!isBasketOpen);
@@ -24,15 +42,26 @@ function App() {
     }
   }, [isBasketOpen]);
 
+
+  const totalPrice = basketState.basketItems.reduce(
+    (total, item) => total + item.price,
+    0
+  );
+
   return (
     <div className={`app-container ${isBasketOpen ? "app-scroll-lock" : ""}`}>
-      <NavBar BasketOnClick={basketToggler} />
-      <h1 className="text-success text-center my-5 text-uppercase fw-bold">
-        Мої товари
-      </h1>
+      <NavBar BasketOnClick={basketToggler} itemsCount={basketState.basketItems.length} />
+      <h1 className="text-success text-center my-5 text-uppercase fw-bold">Мої товари</h1>
 
-      {isBasketOpen ? <Basket basketClose={basketToggler} /> : null}
-      <ShopCardGrid />
+      {isBasketOpen ? (
+        <Basket
+          basketClose={basketToggler}
+          basketItems={basketState.basketItems}
+          totalPrice={totalPrice}
+          // removeFromBasket={}
+        />
+      ) : null}
+      <ShopCardGrid addItems={addItems} basketState={basketState} />
     </div>
   );
 }

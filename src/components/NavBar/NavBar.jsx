@@ -6,9 +6,8 @@ import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 
-import "./NavBar.scss";
 
-function NavBar({BasketOnClick}) {
+function NavBar({ BasketOnClick, itemsCount }) {
   return (
     <Navbar expand="lg" className="bg-dark">
       <Container fluid>
@@ -35,8 +34,29 @@ function NavBar({BasketOnClick}) {
               About
             </Nav.Link>
           </Nav>
-          <Button onClick={BasketOnClick} className="btn-success basket-btn">
+          <Button
+            onClick={BasketOnClick}
+            className="btn-success basket-btn mx-4 position-relative"
+          >
             <FontAwesomeIcon icon={faShoppingCart} style={{ color: "white" }} />
+
+            <div
+              className="items-count bg-danger"
+              style={{
+                borderRadius: "50%",
+                padding: "1px",
+                width: "22px",
+                height: "22px",
+                display: "grid",
+                placeItems: "center",
+                position: "absolute",
+                top: "-10px",
+                fontSize: "12px",
+                right: "-10px",
+              }}
+            >
+              {itemsCount}
+            </div>
           </Button>
         </Navbar.Collapse>
       </Container>
