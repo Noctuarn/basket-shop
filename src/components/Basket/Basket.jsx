@@ -6,7 +6,6 @@ import Button from "react-bootstrap/Button";
 import SelectedItem from "../SelectedItem";
 
 import "./Basket.scss";
-import { useEffect } from "react";
 
 const Basket = ({
   basketClose,
@@ -14,12 +13,14 @@ const Basket = ({
   removeFromBasket,
   basketItems,
   totalPrice,
+  clearBasket,
 }) => {
+
   return (
     <div className="basket">
       <div className="basket-body">
         <div className="basket-header d-flex w-100">
-          <div className="basket-logo text-success fw-bold text-20 text-uppercase">
+          <div className="basket-logo text-success fw-bold text-uppercase">
             Мій кошик
           </div>
           <Button onClick={basketClose} className="btn-success">
@@ -34,26 +35,32 @@ const Basket = ({
           {basketItems.map((el) => (
             <SelectedItem
               key={el.id}
+              id={el.id}
               img={el.img}
               title={el.title}
               price={el.price}
-              removeFromBasket={removeFromBasket}
+              removeFromBasket={() => {removeFromBasket(el.id)}}
             />
           ))}
 
           <h4 className="order-price">
-            Загальна ціна: <span className="text-success fw-bold">{totalPrice.toFixed(2)} $</span>
+            Загальна ціна:{" "}
+            <span className="text-success fw-bold">
+              {totalPrice.toFixed(2)} $
+            </span>
           </h4>
 
           <div className="order d-flex justify-content-between w-100 align-items-center my-2">
-            <Button 
+            <Button
               onClick={orderConfirm}
               className="confirm-button btn-success"
             >
               Підтвердити замовлення
             </Button>
 
-            <Button className="delete-button btn-danger">Очистити кошик</Button>
+            <Button onClick={clearBasket} className="delete-button btn-danger">
+              Очистити кошик
+            </Button>
           </div>
         </div>
       </div>

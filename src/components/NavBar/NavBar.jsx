@@ -16,7 +16,7 @@ function NavBar({ BasketOnClick, itemsCount }) {
           className="text-success"
           href="#"
         >
-          Shop
+          <img src="../../../public/game-controller-gamepad-svgrepo-com.svg" alt="" />
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="navbarScroll" />
         <Navbar.Collapse id="navbarScroll">

@@ -24,8 +24,22 @@ function App() {
   const removeFromBasket = (id) => {
     dispatch({
       type: "REMOVE_ITEM",
-      payload: {item: {id}}
+      payload: id
     })
+  };
+
+  const clearBasket = () => {
+    dispatch({
+      type: "CLEAR_BASKET"
+    })
+  }
+
+  const confirmOrder = () => {
+      alert("Дякую, Ваше замовлення оформлено")
+
+      dispatch({
+        type: "CLEAR_BASKET"
+      })
   }
 
   const basketToggler = () => {
@@ -58,7 +72,9 @@ function App() {
           basketClose={basketToggler}
           basketItems={basketState.basketItems}
           totalPrice={totalPrice}
-          // removeFromBasket={}
+          removeFromBasket={removeFromBasket}
+          clearBasket={clearBasket}
+          orderConfirm={confirmOrder}
         />
       ) : null}
       <ShopCardGrid addItems={addItems} basketState={basketState} />

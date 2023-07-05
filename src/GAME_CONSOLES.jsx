@@ -69,4 +69,5 @@ export const gameConsoles = [
       text: "Мініатюрна версія легендарної ігрової консолі Sega Genesis з популярними іграми.",
       price: 79.99,
     }
+    
   ];
